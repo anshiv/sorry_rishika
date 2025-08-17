@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>I’m really sorry</title>
+  <meta name="description" content="A heartfelt, single‑page apology you can personalize." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>💌</text></svg>">
+  <style>
+    :root {
+      --bg1: 255 240 246; /* soft pink */
+      --bg2: 232 244 255; /* soft blue */
+      --card: 255 255 255;
+      --text: 25 25 28;
+      --muted: 90 90 110;
+      --accent: 255 99 132; /* rose */
+      --accent-2: 59 130 246; /* blue */
+      --ring: 0 0 0 / 0.1;
+      --radius: 24px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.12);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: rgb(var(--text));
+      background: radial-gradient(1200px 800px at 10% 10%, rgba(var(--bg1)) 0%, rgba(var(--bg2)) 50%, #fff 100%);
+      display: grid; place-items: center;
+      overflow-x: hidden;
+    }
+
+    /* subtle animated gradient orbs */
+    .orb { position: fixed; inset: -20vmax; pointer-events: none; filter: blur(60px); opacity: 0.35; }
+    .orb::before, .orb::after {
+      content: ""; position: absolute; width: 50vmax; height: 50vmax; border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, rgba(var(--accent), .35), transparent 60%);
+      animation: drift 22s linear infinite;
+    }
+    .orb::after { left: 40%; top: 20%; background: radial-gradient(circle at 30% 30%, rgba(var(--accent-2), .35), transparent 60%); animation-duration: 30s; animation-direction: reverse;}
+    @keyframes drift { from { transform: translate3d(0,0,0) rotate(0deg);} to { transform: translate3d(5%, -3%, 0) rotate(1turn);} }
+
+    main { width: min(960px, 92vw); }
+
+    .card {
+      background: rgb(var(--card));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(20px, 4vw, 40px);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .header {
+      display: grid; gap: 8px; text-align: center; margin-bottom: 20px;
+    }
+    h1 { font-size: clamp(36px, 6vw, 54px); line-height: 1.05; margin: 0; letter-spacing: -0.02em; }
+    .subtitle { color: rgb(var(--muted)); font-size: clamp(14px, 2.6vw, 18px); }
+
+    .message {
+      font-size: clamp(16px, 2.6vw, 18px);
+      line-height: 1.7;
+      color: rgb(40 40 50);
+      margin: 16px 0 24px;
+    }
+
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .btn {
+      appearance: none; border: none; padding: 12px 18px; border-radius: 999px; cursor: pointer;
+      background: linear-gradient(90deg, rgb(var(--accent)), rgb(var(--accent-2)));
+      color: white; font-weight: 700; letter-spacing: .2px; box-shadow: 0 10px 20px rgba(0,0,0,.10);
+      transition: transform .08s ease, filter .2s ease, box-shadow .2s ease; will-change: transform;
+    }
+    .btn:hover { filter: brightness(1.03); box-shadow: 0 12px 24px rgba(0,0,0,.12); }
+    .btn:active { transform: translateY(1px) scale(.99); }
+
+    .btn.secondary {
+      background: transparent; color: rgb(40 40 55);
+      border: 1px solid rgba(0,0,0,0.12);
+      backdrop-filter: blur(4px);
+    }
+
+    .details {
+      margin-top: 22px; display: none;
+      background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,255,255,.95));
+      border: 1px dashed rgba(0,0,0,.08);
+      padding: 16px; border-radius: 16px;
+    }
+    .details.open { display: block; animation: fadeIn .35s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px);} to { opacity: 1; transform: translateY(0);} }
+
+    .list { padding-left: 18px; }
+    .list li { margin: 6px 0; }
+
+    footer { text-align: center; color: rgb(var(--muted)); font-size: 14px; margin-top: 22px; }
+
+    /* Hearts burst */
+    .heart {
+      position: fixed;
+      font-size: 18px;
+      animation: floatUp 1.8s ease-in forwards;
+      pointer-events: none;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.15));
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(0.9); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(-120px) scale(1.2); opacity: 0; }
+    }
+
+    /* small helper for editable fields */
+    [data-editable] {
+      outline: none; border-radius: 10px;
+    }
+    [data-editable]:focus {
+      box-shadow: 0 0 0 4px rgba(59,130,246,.25);
+    }
+
+    /* Mobile tweaks */
+    @media (max-width: 420px) {
+      .actions { gap: 10px; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="orb" aria-hidden="true"></div>
+  <main>
+    <section class="card" aria-label="Apology card">
+      <header class="header">
+        <h1 contenteditable="true" spellcheck="false" data-editable aria-label="Title">I’m really, truly sorry.</h1>
+        <p class="subtitle" contenteditable="true" spellcheck="false" data-editable aria-label="To line">To: <strong>you</strong> — you didn’t deserve the hurt.</p>
+      </header>
+
+      <p class="message" contenteditable="true" spellcheck="true" data-editable aria-label="Main message">
+        I messed up. I value you, and I value our bond even more. If you’re open to it, I’d love a chance to listen, own my part without excuses, and make this right.
+      </p>
+
+      <div class="actions">
+        <button class="btn" id="reveal">Open my apology</button>
+        <button class="btn secondary" id="wh">Send on WhatsApp</button>
+        <button class="btn secondary" id="copy">Copy this page text</button>
+      </div>
+
+      <div id="details" class="details" aria-live="polite">
+        <h3 style="margin: 0 0 10px 0;">What I’m apologizing for</h3>
+        <ul class="list" contenteditable="true" data-editable aria-label="Reasons list">
+          <li>I didn’t communicate clearly and left you hanging.</li>
+          <li>I minimized your feelings instead of trying to understand them.</li>
+          <li>I took longer to accept responsibility than I should have.</li>
+        </ul>
+        <p contenteditable="true" data-editable aria-label="Commitment">
+          Here’s my plan to do better: I’ll listen first, ask before assuming, and keep my promises. I care about us. If you’re willing, I’d love to talk when you’re ready.
+        </p>
+      </div>
+
+      <footer>
+        <small contenteditable="true" data-editable aria-label="Footer note">— I wrote this for you. You can edit any line by tapping it.</small>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+
+    function burstHearts(x, y, n = 18) {
+      const emojis = ["❤️","💗","💖","💘","💝","🫶"]; // wholesome
+      for (let i = 0; i < n; i++) {
+        const el = document.createElement('div');
+        el.className = 'heart';
+        el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+        const angle = (Math.random() * Math.PI) - (Math.PI/2);
+        const distance = 30 + Math.random() * 50;
+        el.style.left = (x + Math.cos(angle) * distance) + 'px';
+        el.style.top  = (y + Math.sin(angle) * distance) + 'px';
+        el.style.transform = `translateY(0) rotate(${(Math.random()*40-20).toFixed(1)}deg)`;
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 1900);
+      }
+    }
+
+    $('#reveal').addEventListener('click', (e) => {
+      const box = $('#details');
+      box.classList.toggle('open');
+      const r = e.currentTarget.getBoundingClientRect();
+      burstHearts(r.left + r.width/2, r.top + window.scrollY);
+    });
+
+    $('#copy').addEventListener('click', async () => {
+      const text = $$('[data-editable]').map(n => n.innerText.trim()).filter(Boolean).join('\n\n');
+      try {
+        await navigator.clipboard.writeText(text);
+        alert('Copied your apology text. Paste anywhere!');
+      } catch(err) {
+        prompt('Copy your apology text:', text);
+      }
+    });
+
+    $('#wh').addEventListener('click', () => {
+      const title = $('h1').innerText.trim();
+      const to = $('.subtitle').innerText.replace(/^To:\s*/i,'').trim();
+      const msg = $('.message').innerText.trim();
+      const details = $('#details').classList.contains('open')
+        ? $('ul').innerText.trim() + '\n\n' + $$('[data-editable]')[3].innerText.trim()
+        : '';
+      const text = `${title}\n${to ? 'To: ' + to + '\n' : ''}${msg}\n\n${details}`.trim();
+      const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+    });
+
+    // Persist edits locally so you can refresh without losing text
+    const KEY = 'apology-draft-v1';
+    function saveDraft() {
+      const data = $$('[data-editable]').map(n => n.innerHTML);
+      localStorage.setItem(KEY, JSON.stringify(data));
+    }
+    function loadDraft() {
+      try {
+        const data = JSON.parse(localStorage.getItem(KEY)||'null');
+        if (!data) return;
+        $$('[data-editable]').forEach((n, i) => n.innerHTML = data[i] || n.innerHTML);
+      } catch {}
+    }
+    loadDraft();
+    $$('#details [data-editable], [data-editable]').forEach(n => n.addEventListener('input', saveDraft));
+  </script>
+</body>
+</html>
