@@ -30,7 +30,6 @@
       overflow-x: hidden;
     }
 
-    /* subtle animated gradient orbs */
     .orb { position: fixed; inset: -20vmax; pointer-events: none; filter: blur(60px); opacity: 0.35; }
     .orb::before, .orb::after {
       content: ""; position: absolute; width: 50vmax; height: 50vmax; border-radius: 999px;
@@ -95,7 +94,6 @@
 
     footer { text-align: center; color: rgb(var(--muted)); font-size: 14px; margin-top: 22px; }
 
-    /* Hearts burst */
     .heart {
       position: fixed;
       font-size: 18px;
@@ -109,7 +107,6 @@
       100% { transform: translateY(-120px) scale(1.2); opacity: 0; }
     }
 
-    /* small helper for editable fields */
     [data-editable] {
       outline: none; border-radius: 10px;
     }
@@ -117,7 +114,6 @@
       box-shadow: 0 0 0 4px rgba(59,130,246,.25);
     }
 
-    /* Mobile tweaks */
     @media (max-width: 420px) {
       .actions { gap: 10px; }
       .btn { width: 100%; }
@@ -134,7 +130,7 @@
       </header>
 
       <p class="message" contenteditable="true" spellcheck="true" data-editable aria-label="Main message">
-        I messed up. I value you, and I value our bond even more. If you’re open to it, I’d love a chance to listen, own my part without excuses, and make this right.
+        I disappeared, and I know that hurt. But my verdict is—I gave my warning. I’ve been by myself for some time, and I’m genuinely trying to change. Please give me some time to make those changes. I’ll try to make my actions and words align. :)
       </p>
 
       <div class="actions">
@@ -146,12 +142,12 @@
       <div id="details" class="details" aria-live="polite">
         <h3 style="margin: 0 0 10px 0;">What I’m apologizing for</h3>
         <ul class="list" contenteditable="true" data-editable aria-label="Reasons list">
-          <li>I didn’t communicate clearly and left you hanging.</li>
-          <li>I minimized your feelings instead of trying to understand them.</li>
-          <li>I took longer to accept responsibility than I should have.</li>
+          <li>I disappeared when I should have stayed connected.</li>
+          <li>I didn’t handle things with enough clarity or consistency.</li>
+          <li>I know my actions didn’t match my words, and I want to fix that.</li>
         </ul>
         <p contenteditable="true" data-editable aria-label="Commitment">
-          Here’s my plan to do better: I’ll listen first, ask before assuming, and keep my promises. I care about us. If you’re willing, I’d love to talk when you’re ready.
+          Here’s my plan to do better: to show up more honestly, to keep my words aligned with my actions, and to take responsibility for my part. I’m asking for patience while I work on myself.
         </p>
       </div>
 
@@ -166,7 +162,7 @@
     const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
     function burstHearts(x, y, n = 18) {
-      const emojis = ["❤️","💗","💖","💘","💝","🫶"]; // wholesome
+      const emojis = ["❤️","💗","💖","💘","💝","🫶"];
       for (let i = 0; i < n; i++) {
         const el = document.createElement('div');
         el.className = 'heart';
@@ -210,7 +206,6 @@
       window.open(url, '_blank');
     });
 
-    // Persist edits locally so you can refresh without losing text
     const KEY = 'apology-draft-v1';
     function saveDraft() {
       const data = $$('[data-editable]').map(n => n.innerHTML);
